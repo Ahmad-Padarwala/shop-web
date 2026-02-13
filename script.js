@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "Gold Tea",
             badge: "Premium",
             price: "₹850",
-            desc: "Golden-tipped leaves with exceptional aroma.",
+            desc: "Best gold tea — premium golden-tipped Assam tea leaf with exceptional aroma.",
             image: "images/three-key-tea-pack.png"
         },
         {
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "Mamri Tea",
             badge: "Strong",
             price: "₹650",
-            desc: "Robust granular tea for a strong morning cup.",
+            desc: "Best mamri tea — robust granular Assam tea for a strong morning cup.",
             image: "images/three-key-tea-pack.png"
         },
         {
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "Mix Tea",
             badge: "Balanced",
             price: "₹550",
-            desc: "The perfect balance of strength and flavor.",
+            desc: "Premium tea blend — the perfect balance of best Assam tea strength and flavor.",
             image: "images/three-key-tea-pack.png"
         },
         {
@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "Small Grains",
             badge: "Value",
             price: "₹450",
-            desc: "Quick brewing for instant refreshment.",
+            desc: "Best tea for quick brewing — fine Assam tea grains for instant refreshment.",
             image: "images/three-key-tea-pack.png"
         }
     ];
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="tea-card">
                 <div class="card-image-wrapper">
                     <span class="badge">${product.badge}</span>
-                    <img src="${product.image}" alt="${product.name}" class="tea-img" loading="lazy">
+                    <img src="${product.image}" alt="${product.name} - Three Key Tea, Best Tea in India" class="tea-img" loading="lazy">
                 </div>
                 <div class="card-content">
                     <div class="card-top">
