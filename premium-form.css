@@ -1,0 +1,350 @@
+/* ===================================
+   MODERN PREMIUM FORM DESIGN (Enhanced)
+   =================================== */
+
+/* Main Card */
+.modern-form-card {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 20px;
+    /* Deep, soft shadow for lifted effect */
+    box-shadow:
+        0 20px 50px -12px rgba(0, 0, 0, 0.12),
+        0 8px 24px -6px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    max-width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle decorative top bar */
+.modern-form-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #c13940, #e63946);
+}
+
+/* Form Groups */
+.modern-form-group {
+    margin-bottom: 1.25rem;
+    position: relative;
+}
+
+/* Labels */
+.modern-label {
+    display: block;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.01em;
+}
+
+.modern-label svg {
+    color: #c13940;
+    width: 18px;
+    height: 18px;
+    background: rgba(193, 57, 64, 0.08);
+    /* Brand Accent Light BG */
+    padding: 3px;
+    border-radius: 5px;
+    flex-shrink: 0;
+}
+
+/* Inputs */
+.modern-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    color: #111827;
+    background-color: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+}
+
+.modern-input::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+.modern-input:hover {
+    background-color: #ffffff;
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.modern-input:focus {
+    background-color: #ffffff;
+    border-color: #c13940;
+    box-shadow:
+        0 0 0 3px rgba(193, 57, 64, 0.08),
+        0 4px 10px rgba(193, 57, 64, 0.08);
+    transform: translateY(-1px);
+}
+
+/* Select */
+.modern-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+/* Textarea */
+.modern-textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+/* Quantity Stepper */
+.modern-stepper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 10px 16px;
+    width: fit-content;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s ease;
+}
+
+.modern-stepper:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.05);
+}
+
+.stepper-action-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    border: none;
+    background-color: #f1f5f9;
+    color: #334155;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stepper-action-btn:hover {
+    background-color: #c13940;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.stepper-action-btn:active {
+    transform: scale(0.95);
+}
+
+.stepper-value-display {
+    width: 70px;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #0f172a;
+    background: transparent;
+    border: none;
+    font-family: 'Outfit', sans-serif;
+    padding: 0;
+}
+
+.stepper-unit-label {
+    font-weight: 600;
+    color: #64748b;
+    font-size: 0.95rem;
+    padding-right: 4px;
+}
+
+/* Submit Button */
+.modern-submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 20px;
+    margin-top: 1.5rem;
+    background: linear-gradient(135deg, #25D366 0%, #1ea952 50%, #128C7E 100%);
+    background-size: 200% 100%;
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 10px 25px -5px rgba(37, 211, 102, 0.4),
+        0 8px 10px -6px rgba(37, 211, 102, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Shine effect on button */
+.modern-submit-btn::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg,
+            transparent 45%,
+            rgba(255, 255, 255, 0.2) 50%,
+            transparent 55%);
+    transform: rotate(45deg);
+    transition: 0.6s;
+    opacity: 0;
+}
+
+.modern-submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 20px 35px -5px rgba(37, 211, 102, 0.5),
+        0 10px 10px -5px rgba(37, 211, 102, 0.3);
+    background-position: 100% 0;
+}
+
+.modern-submit-btn:hover::after {
+    opacity: 1;
+    left: 100%;
+}
+
+.modern-submit-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+}
+
+/* Error Messages - Clean & Direct */
+.input-error-msg {
+    color: #ef4444;
+    /* Brighter red */
+    font-size: 0.85rem;
+    margin-top: 6px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 20px;
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: all 0.2s ease;
+}
+
+.input-error-msg:not(:empty) {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Character Animation (Add this to main style.css or here if specific) */
+.character-img {
+    animation: float 6s ease-in-out infinite;
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.15));
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .modern-form-card {
+        padding: 2rem;
+        border-radius: 24px;
+    }
+
+    .modern-input {
+        padding: 14px 16px;
+        font-size: 1rem;
+    }
+
+    .modern-submit-btn {
+        padding: 18px;
+        font-size: 1.1rem;
+    }
+}
+/* ===================================
+   TOAST NOTIFICATIONS
+   =================================== */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast-notification {
+    background: #ffffff;
+    color: #1f2937;
+    padding: 16px 24px;
+    border-radius: 12px;
+    box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+        0 2px 4px -1px rgba(0, 0, 0, 0.06),
+        0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 300px;
+    transform: translateX(120%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-left: 4px solid #3b82f6; /* Default Blue */
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.toast-notification.show {
+    transform: translateX(0);
+}
+
+.toast-notification.error {
+    border-left-color: #ef4444;
+}
+
+.toast-notification.success {
+    border-left-color: #22c55e;
+}
+
+.toast-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.toast-notification.error .toast-icon {
+    color: #ef4444;
+}
+
+.toast-notification.success .toast-icon {
+    color: #22c55e;
+}

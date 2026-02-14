@@ -3,18 +3,33 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Mobile Menu ---
     const menuToggle = document.getElementById('menuToggle');
     const navLinks = document.getElementById('navLinks');
-    const closeMenu = document.getElementById('closeMenu');
     const navItems = document.querySelectorAll('.nav-link');
 
-    const toggleMenu = () => navLinks.classList.toggle('active');
+    const toggleMenu = () => {
+        navLinks.classList.toggle('active');
+        menuToggle.classList.toggle('active');
+    };
+
+    const closeMenu = () => {
+        navLinks.classList.remove('active');
+        menuToggle.classList.remove('active');
+    };
 
     if (menuToggle) menuToggle.addEventListener('click', toggleMenu);
-    if (closeMenu) closeMenu.addEventListener('click', toggleMenu);
 
     navItems.forEach(item => {
-        item.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-        });
+        item.addEventListener('click', closeMenu);
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        const isMenuOpen = navLinks.classList.contains('active');
+        const isClickInsideMenu = navLinks.contains(e.target);
+        const isClickOnToggle = menuToggle.contains(e.target);
+
+        if (isMenuOpen && !isClickInsideMenu && !isClickOnToggle) {
+            closeMenu();
+        }
     });
 
     // --- Navbar Scroll ---
@@ -50,12 +65,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    //--- Quantity Stepper ---
+    const qtyInput = document.getElementById('quantity');
+    const qtyPlus = document.getElementById('qtyPlus');
+    const qtyMinus = document.getElementById('qtyMinus');
+
+    if (qtyPlus && qtyMinus && qtyInput) {
+        qtyPlus.addEventListener('click', () => {
+            let currentValue = parseInt(qtyInput.value) || 1;
+            qtyInput.value = currentValue + 1;
+        });
+
+        qtyMinus.addEventListener('click', () => {
+            let currentValue = parseInt(qtyInput.value) || 1;
+            if (currentValue > 1) {
+                qtyInput.value = currentValue - 1;
+            }
+        });
+    }
+
     // --- WhatsApp Form Submission (Pixel-Accurate Sync) ---
     const form = document.getElementById('orderForm');
     const popup = document.getElementById('successPopup');
 
     if (form) {
-        const fields = form.querySelectorAll('.pixel-field');
+        const fields = form.querySelectorAll('.modern-input');
 
         // 1. Precise Error Clearing
         fields.forEach(field => {
@@ -63,29 +97,70 @@ document.addEventListener('DOMContentLoaded', () => {
                 const errorSpan = document.getElementById(`${field.id}Error`);
                 if (errorSpan) {
                     errorSpan.textContent = '';
-                    errorSpan.classList.remove('visible');
                 }
-                field.closest('.input-with-icon').style.borderBottomColor = '';
+                field.style.borderColor = '';
             });
         });
 
+        // Initialize Toast Container
+        let toastContainer = document.querySelector('.toast-container');
+        if (!toastContainer) {
+            toastContainer = document.createElement('div');
+            toastContainer.className = 'toast-container';
+            document.body.appendChild(toastContainer);
+        }
+
+        const showToast = (message, type = 'error') => {
+            const toast = document.createElement('div');
+            toast.className = `toast-notification ${type}`;
+
+            // Icon based on type
+            let iconSvg = '';
+            if (type === 'error') {
+                iconSvg = `<svg class="toast-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`;
+            } else {
+                iconSvg = `<svg class="toast-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+            }
+
+            toast.innerHTML = `${iconSvg}<span>${message}</span>`;
+            toastContainer.appendChild(toast);
+
+            // Animate in
+            requestAnimationFrame(() => {
+                toast.classList.add('show');
+            });
+
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        };
+
         const showPixelError = (id, msg) => {
-            const errorSpan = document.getElementById(`${id}Error`);
             const field = document.getElementById(id);
-            if (errorSpan) {
-                errorSpan.textContent = msg;
-                errorSpan.classList.add('visible');
-            }
             if (field) {
-                field.closest('.input-with-icon').style.borderBottomColor = '#feb2b2';
+                field.style.borderColor = '#ef4444';
+                // Shake animation for visual feedback
+                field.animate([
+                    { transform: 'translateX(0)' },
+                    { transform: 'translateX(-5px)' },
+                    { transform: 'translateX(5px)' },
+                    { transform: 'translateX(0)' }
+                ], {
+                    duration: 300,
+                    iterations: 1
+                });
             }
+            showToast(msg, 'error');
         };
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            let isValid = true;
 
-            // 2. Validation Logic (Strict)
+            // 2. Validation Logic (Strict & Sequential)
             const name = document.getElementById('name').value.trim();
             const phone = document.getElementById('phone').value.trim();
             const tea = document.getElementById('teaType').value;
@@ -94,54 +169,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!name) {
                 showPixelError('name', 'Please enter your full name');
-                isValid = false;
+                return;
             }
 
             if (!phone) {
                 showPixelError('phone', 'Phone number is required');
-                isValid = false;
+                return;
             } else if (!/^\d{10}$/.test(phone.replace(/\D/g, ''))) {
                 showPixelError('phone', 'Please enter a valid 10-digit number');
-                isValid = false;
+                return;
             }
 
             if (!tea) {
                 showPixelError('teaType', 'Please select a tea variety');
-                isValid = false;
+                return;
             }
 
             if (!qty || qty <= 0) {
                 showPixelError('quantity', 'Enter a valid quantity');
-                isValid = false;
+                return;
             }
 
-            if (!isValid) return;
+            // 3. WhatsApp Redirect
+            const phoneNum = "919725575378";
+            const text = `*New Order Inquiry* 🌿%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Tea:* ${tea}%0A*Quantity:* ${qty} KG%0A*Message:* ${msg || 'None'}`;
 
-            // 3. WhatsApp Message Formatting
-            const whatsappMsg = `*New Inquiry from Website* %0a%0a` +
-                `*Name:* ${name} %0a` +
-                `*Phone:* ${phone} %0a` +
-                `*Product:* ${tea} %0a` +
-                `*Quantity:* ${qty} KG %0a` +
-                `*Message:* ${msg || 'No specific requirements'}`;
+            window.open(`https://wa.me/${phoneNum}?text=${text}`, '_blank');
 
-            const myPhoneNumber = "919725575378";
-            const whatsappUrl = `https://wa.me/${myPhoneNumber}?text=${whatsappMsg}`;
-
-            // 4. Success UX
-            if (popup) {
-                popup.classList.add('show');
-                const pTitle = popup.querySelector('h3');
-                const pText = popup.querySelector('p');
-                if (pTitle) pTitle.textContent = "Redirecting to WhatsApp...";
-                if (pText) pText.textContent = "Preparing your inquiry details.";
-            }
-
-            setTimeout(() => {
-                window.open(whatsappUrl, '_blank');
-                form.reset();
-                if (popup) popup.classList.remove('show');
-            }, 1800);
+            showToast('Redirecting to WhatsApp...', 'success');
+            form.reset();
         });
     }
 
@@ -404,6 +460,27 @@ document.addEventListener('DOMContentLoaded', () => {
         carouselTrack.addEventListener('mouseenter', stopAutoPlay);
         carouselTrack.addEventListener('mouseleave', startAutoPlay);
     }
+    // --- FAQ ACCORDION ---
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const questionBtn = item.querySelector('.faq-question');
+        if (questionBtn) {
+            questionBtn.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                // Close all other FAQ items (accordion behavior)
+                faqItems.forEach(other => {
+                    other.classList.remove('active');
+                    const otherBtn = other.querySelector('.faq-question');
+                    if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+                });
+                // Toggle current
+                if (!isActive) {
+                    item.classList.add('active');
+                    questionBtn.setAttribute('aria-expanded', 'true');
+                }
+            });
+        }
+    });
 
     // --- CONTENT PROTECTION ---
     // 1. Disable Right Click
@@ -415,27 +492,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Disable Image Dragging
     document.addEventListener('dragstart', (e) => {
         if (e.target.tagName === 'IMG') {
-            e.preventDefault();
-            return false;
-        }
-    });
-
-    // 3. Disable Keyboard Shortcuts (Copy, Save, Inspect)
-    document.addEventListener('keydown', (e) => {
-        // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
-        if (
-            e.key === 'F12' ||
-            (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
-            (e.ctrlKey && e.key === 'u') ||
-            (e.ctrlKey && e.key === 's') ||
-            (e.ctrlKey && e.key === 'p')
-        ) {
-            e.preventDefault();
-            return false;
-        }
-
-        // Disable Copy/Cut/Paste
-        if (e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'v')) {
             e.preventDefault();
             return false;
         }

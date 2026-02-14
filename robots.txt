@@ -1,5 +1,23 @@
 User-agent: *
 Allow: /
-Disallow: /images/
+Crawl-delay: 1
 
+# Allow image crawling for Google Images
+Allow: /images/
+
+# Sitemap
 Sitemap: https://threekeytea.in/sitemap.xml
+
+# AI Crawlers - Allow indexing for AI search
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+User-agent: ChatGPT-User
+Allow: /
